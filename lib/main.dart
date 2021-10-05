@@ -23,19 +23,27 @@ class RamdomWords extends StatefulWidget {
 }
 
 class RamdomWordsState extends State<RamdomWords> {
-  final wordPair = WordPair.random();
-  final _words = <WordPair>[];
-  final Set<WordPair> _save = Set<WordPair>();
+  final WordPair wordPair = WordPair.random();
+  final List<WordPair> _words = <WordPair>[];
+  final Set<WordPair> _saved = Set<WordPair>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Examble Listvews",
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.red[100],
-        actions: [IconButton(onPressed: null, icon: Icon(Icons.list))],
+        actions: [
+          IconButton(
+              onPressed: _pushSaved,
+              icon: const Icon(
+                Icons.list,
+                color: Colors.black,
+              ))
+        ],
       ),
       body: Center(child: ListView.builder(itemBuilder: (context, index) {
         if (index.isOdd) {
@@ -50,7 +58,7 @@ class RamdomWordsState extends State<RamdomWords> {
   }
 
   Widget _buildRow(WordPair wordPair) {
-    final bool alreadySaved = _save.contains(wordPair);
+    final bool alreadySaved = _saved.contains(wordPair);
 
     return ListTile(
       title: Text(wordPair.asString,
@@ -64,11 +72,35 @@ class RamdomWordsState extends State<RamdomWords> {
       onTap: () {
         setState(() {
           if (alreadySaved)
-            _save.remove(wordPair);
+            _saved.remove(wordPair);
           else
-            _save.add(wordPair);
+            _saved.add(wordPair);
         });
       },
     );
+  }
+
+  void _pushSaved() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (BuildContext context) {
+      final Iterable<ListTile> tiles = _saved.map((e) => ListTile(
+            title: Text(e.asString,
+                style: const TextStyle(
+                  fontSize: 18.0,
+                )),
+          ));
+      final List<Widget> divided =
+          ListTile.divideTiles(tiles: tiles, context: context).toList();
+      return Scaffold(
+        appBar: AppBar(
+            title:
+                const Text("Saved list", style: TextStyle(color: Colors.black)),
+            backgroundColor: Colors.red[100],
+            iconTheme: IconThemeData(color: Colors.black)),
+        body: ListView(
+          children: divided,
+        ),
+      );
+    }));
   }
 }
