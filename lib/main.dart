@@ -13,18 +13,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Demo ListViews',
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              "Examble Listvews",
-              style: TextStyle(color: Colors.black),
-            ),
-            backgroundColor: Colors.red[100],
-          ),
-          body: Center(child: RamdomWords()),
-        ));
+    return MaterialApp(title: 'Demo ListViews', home: RamdomWords());
   }
 }
 
@@ -39,15 +28,25 @@ class RamdomWordsState extends State<RamdomWords> {
   final Set<WordPair> _save = Set<WordPair>();
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(itemBuilder: (context, index) {
-      if (index.isOdd) {
-        return Divider();
-      }
-      if (index >= _words.length) {
-        _words.addAll(generateWordPairs().take(10));
-      }
-      return _buildRow(_words[index]);
-    });
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Examble Listvews",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.red[100],
+        actions: [IconButton(onPressed: null, icon: Icon(Icons.list))],
+      ),
+      body: Center(child: ListView.builder(itemBuilder: (context, index) {
+        if (index.isOdd) {
+          return Divider();
+        }
+        if (index >= _words.length) {
+          _words.addAll(generateWordPairs().take(10));
+        }
+        return _buildRow(_words[index]);
+      })),
+    );
   }
 
   Widget _buildRow(WordPair wordPair) {
