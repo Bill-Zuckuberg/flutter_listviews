@@ -36,6 +36,7 @@ class RamdomWords extends StatefulWidget {
 class RamdomWordsState extends State<RamdomWords> {
   final wordPair = WordPair.random();
   final _words = <WordPair>[];
+  final Set<WordPair> _save = Set<WordPair>();
   @override
   Widget build(BuildContext context) {
     return ListView.builder(itemBuilder: (context, index) {
@@ -50,15 +51,25 @@ class RamdomWordsState extends State<RamdomWords> {
   }
 
   Widget _buildRow(WordPair wordPair) {
+    final bool alreadySaved = _save.contains(wordPair);
+
     return ListTile(
       title: Text(wordPair.asString,
           style: const TextStyle(
             fontSize: 18.0,
           )),
       trailing: Icon(
-        Icons.favorite,
-        color: Colors.red,
+        alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? Colors.red : null,
       ),
+      onTap: () {
+        setState(() {
+          if (alreadySaved)
+            _save.remove(wordPair);
+          else
+            _save.add(wordPair);
+        });
+      },
     );
   }
 }
