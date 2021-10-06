@@ -1,0 +1,16 @@
+[33mcommit 4c37c5545b884c86ff76a4237d44d56b99caad4d[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Bill-Zuckuberg <thanh821329@gmail.com>
+Date:   Wed Oct 6 03:43:12 2021 +0700
+
+    debug can't install app
+
+[1mdiff --git a/lib/main.dart b/lib/main.dart[m
+[1mindex 3dcb7d1..fd8cc3d 100644[m
+[1m--- a/lib/main.dart[m
+[1m+++ b/lib/main.dart[m
+[36m@@ -1,5 +1,3 @@[m
+[31m-import 'dart:html';[m
+[31m-[m
+ import 'package:flutter/material.dart';[m
+ import 'package:english_words/english_words.dart';[m
+ [m
